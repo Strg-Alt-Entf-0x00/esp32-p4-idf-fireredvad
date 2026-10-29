@@ -12,9 +12,8 @@ files:
   exclude:
     - "examples/**/build/**/*"
     - "examples/**/managed_components/**/*"
-    - "models_pth/**/*"
+    - "models_py/**/*"
     - "tools_py/**/*"
     - ".docs/**/*"
     - ".git/**/*"
     - "**/.DS_Store"
-

@@ -132,7 +132,7 @@ def build_pytorch_model_from_frvd(arch, tensors):
         shape = sd[key].shape
         tensor = tensors[i]
         if "lookback_filter" in key or "lookahead_filter" in key:
-            # export_weights.py stores FSMN filters as [N, P] with reversed time.
+            # fireredvad_convert_models.py stores FSMN filters as [N, P] with reversed time.
             # Restore PyTorch's [P, 1, N] layout before loading the state dict.
             tensor = tensor.reshape(shape[2], shape[0]).T[:, ::-1].copy()
             tensor = tensor.reshape(shape[0], 1, shape[2])

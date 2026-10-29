@@ -1,5 +1,7 @@
 # FireRedVAD for ESP32-P4 (Industrial Grade)
 
+[Changelog](CHANGELOG.md)
+
 A professional, hardware-accelerated Voice Activity Detection (VAD) pipeline specifically optimized for the **ESP32-P4 (Chip Revision v1.3)**. This repository provides a fully multithreaded, real-time AI audio pipeline running on the **Waveshare ESP32-P4-WIFI6** board.
 
 ## Key Features
@@ -95,15 +97,24 @@ If you need to re-download or convert models from source:
 
 1. **Download Original PyTorch Models:**
    ```bash
-   cd tools_py
-   download_py_models_fireredvad.bat
+   tools_py\fireredvad_download_models_py.bat
    ```
-   This downloads from HuggingFace (FireRedTeam/FireRedVAD) into `models_pth/`
+   This downloads the three model checkpoints and their CMVN files from a
+   pinned Hugging Face revision into `models_py/`. Select a single model with
+   its catalog artifact ID:
+
+   ```cmd
+   tools_py\fireredvad_download_models_py.bat --artifact fireredvad-stream-vad
+   ```
+
+   The standalone runtime and catalog are in
+   `tools_py/fireredvad_models_py_downloader/`; cloning this repository does
+   not require Autodev.
 
 2. **Convert to ESP32 .frvd Format:**
    ```bash
    cd tools_py
-   convert_all_models.bat
+   fireredvad_convert_models.bat
    ```
    This creates 4 quantization levels for each model in both example directories.
 

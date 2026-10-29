@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "project_id": "fireredvad",
+  "artifacts": [
+    {
+      "id": "fireredvad-stream-vad",
+      "destination": "Stream-VAD",
+      "source": {
+        "provider": "huggingface",
+        "repo_id": "FireRedTeam/FireRedVAD",
+        "revision": "7990aaccc6b7aec1e527743bd30201f2c4a03b8c",
+        "files": [
+          {"id": "stream-vad-checkpoint", "default": true, "path": "Stream-VAD/model.pth.tar"},
+          {"id": "stream-vad-cmvn", "default": true, "path": "Stream-VAD/cmvn.ark"}
+        ]
+      }
+    },
+    {
+      "id": "fireredvad-vad",
+      "destination": "VAD",
+      "source": {
+        "provider": "huggingface",
+        "repo_id": "FireRedTeam/FireRedVAD",
+        "revision": "7990aaccc6b7aec1e527743bd30201f2c4a03b8c",
+        "files": [
+          {"id": "vad-checkpoint", "default": true, "path": "VAD/model.pth.tar"},
+          {"id": "vad-cmvn", "default": true, "path": "VAD/cmvn.ark"}
+        ]
+      }
+    },
+    {
+      "id": "fireredvad-aed",
+      "destination": "AED",
+      "source": {
+        "provider": "huggingface",
+        "repo_id": "FireRedTeam/FireRedVAD",
+        "revision": "7990aaccc6b7aec1e527743bd30201f2c4a03b8c",
+        "files": [
+          {"id": "aed-checkpoint", "default": true, "path": "AED/model.pth.tar"},
+          {"id": "aed-cmvn", "default": true, "path": "AED/cmvn.ark"}
+        ]
+      }
+    }
+  ],
+  "converter": null
+}

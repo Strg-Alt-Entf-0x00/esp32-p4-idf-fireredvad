@@ -1,3 +1,8 @@
+# ESP-IDF sdkconfig defaults
+# Example: esp32-p4-idf-fireredvad / examples/console_vad
+# Hardware-specific options must match the target board and ESP-IDF version.
+# Entries and values are preserved; sections are ordered for easier review.
+
 # ============================================================================
 # ESP32-P4 Hardware Target Configuration
 # ============================================================================
@@ -24,27 +29,27 @@ CONFIG_SPIRAM=y
 CONFIG_SPIRAM_USE_MALLOC=y
 
 # ============================================================================
-# SPIFFS Configuration (14MB models partition)
+# Compiler Optimization (CRITICAL for Performance!)
 # ============================================================================
-CONFIG_SPIFFS_MAX_PARTITIONS=3
-CONFIG_SPIFFS_PAGE_SIZE=512
-CONFIG_SPIFFS_OBJ_NAME_LEN=64
-CONFIG_SPIFFS_USE_MAGIC=y
-CONFIG_SPIFFS_USE_MAGIC_LENGTH=y
-CONFIG_SPIFFS_META_LENGTH=4
-CONFIG_SPIFFS_USE_MTIME=y
+CONFIG_COMPILER_OPTIMIZATION_ASSERTIONS_DISABLE=y
+CONFIG_COMPILER_OPTIMIZATION_PERF=y
+CONFIG_ESP_TASK_WDT_TIMEOUT_S=10
 
 # ============================================================================
 # FreeRTOS Configuration
 # ============================================================================
 CONFIG_FREERTOS_HZ=1000
-CONFIG_ESP_TASK_WDT_TIMEOUT_S=10
+
+# ============================================================================
+# Power Management
+# ============================================================================
+CONFIG_PM_ENABLE=y
 
 # ============================================================================
 # Console/UART Configuration
 # ============================================================================
-CONFIG_ESP_CONSOLE_UART_NUM=0
 CONFIG_ESP_CONSOLE_UART_BAUDRATE=115200
+CONFIG_ESP_CONSOLE_UART_NUM=0
 
 # ============================================================================
 # Logging Configuration
@@ -58,9 +63,15 @@ CONFIG_LOG_MAXIMUM_LEVEL_VERBOSE=y
 CONFIG_I2S_ENABLE_DEBUG_LOG=n
 
 # ============================================================================
-# FireVAD Component Configuration
+# SPIFFS Configuration (14MB models partition)
 # ============================================================================
-CONFIG_FIREVAD_ENABLE_AUDIO=y
+CONFIG_SPIFFS_MAX_PARTITIONS=3
+CONFIG_SPIFFS_META_LENGTH=4
+CONFIG_SPIFFS_OBJ_NAME_LEN=64
+CONFIG_SPIFFS_PAGE_SIZE=512
+CONFIG_SPIFFS_USE_MAGIC=y
+CONFIG_SPIFFS_USE_MAGIC_LENGTH=y
+CONFIG_SPIFFS_USE_MTIME=y
 
 # ============================================================================
 # ESP-DSP Optimization (CRITICAL: Enable PIE/SIMD acceleration!)
@@ -69,12 +80,6 @@ CONFIG_DSP_ANSI=n
 CONFIG_DSP_OPTIMIZED=y
 
 # ============================================================================
-# Compiler Optimization (CRITICAL for Performance!)
+# FireVAD Component Configuration
 # ============================================================================
-CONFIG_COMPILER_OPTIMIZATION_PERF=y
-CONFIG_COMPILER_OPTIMIZATION_ASSERTIONS_DISABLE=y
-
-# ============================================================================
-# Power Management
-# ============================================================================
-CONFIG_PM_ENABLE=y
+CONFIG_FIREVAD_ENABLE_AUDIO=y

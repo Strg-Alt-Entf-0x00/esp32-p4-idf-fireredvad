@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-FireRedVAD -> ESP32 Native Binary Converter (export_weights.py)
+FireRedVAD -> ESP32 Native Binary Converter
 
 Converts the original FireRedVAD PyTorch checkpoint (model.pth.tar + cmvn.ark)
 into a flat binary file (.bin) for our custom ESP32 C++ inference engine.
@@ -49,7 +49,7 @@ Int8 Format (Version 2):
     [12..]   data[num_elements]: int8 LE
 
 Usage:
-  python export_weights.py --model-dir <path_to_Stream-VAD> --output-dir <output_dir>
+  python fireredvad_convert_models.py --model-dir <path_to_Stream-VAD> --output-dir <output_dir>
 
 Dependencies:
   pip install torch kaldiio numpy
@@ -497,13 +497,13 @@ def main():
         description="FireRedVAD -> ESP32 Native Binary Converter",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""Examples:
-        python export_weights.py --model-dir ../models_pth/Stream-VAD --output-dir ../../examples/console_vad/models_frvd
-        python export_weights.py --model-dir ../models_pth/VAD --output-dir ../../examples/console_vad/models_frvd
-    python export_weights.py --all --output-dir ../../examples/console_vad/models_frvd
+        python fireredvad_convert_models.py --model-dir ../../models_py/Stream-VAD --output-dir ../../examples/console_vad/models_frvd
+        python fireredvad_convert_models.py --model-dir ../../models_py/VAD --output-dir ../../examples/console_vad/models_frvd
+    python fireredvad_convert_models.py --all --output-dir ../../examples/console_vad/models_frvd
 """)
     parser.add_argument("--model-dir", help="Path to model directory containing model.pth.tar and cmvn.ark")
     parser.add_argument("--output-dir", required=True, help="Output directory for .frvd and debug files")
-    parser.add_argument("--all", action="store_true", help="Convert all models found in models_pth/")
+    parser.add_argument("--all", action="store_true", help="Convert all models found in models_py/")
     parser.add_argument("--quantize-int8", action="store_true", help="Quantize weights to int8 (Symmetric Weight-Only)")
     parser.add_argument("--quantize-int8-per-ch", action="store_true", help="Quantize weights to int8 (Per-Channel Symmetric Weight-Only)")
     parser.add_argument("--quantize-int16", action="store_true", help="Quantize weights to int16")
@@ -513,12 +513,10 @@ def main():
     if args.all:
         # Auto-discover all model directories
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        models_root = os.path.join(script_dir, "..", "..", "models_pth")
-        if not os.path.exists(models_root):
-            models_root = os.path.join(script_dir, "..", "models_pth")
+        models_root = os.path.abspath(os.path.join(script_dir, "..", "..", "models_py"))
 
         if not os.path.exists(models_root):
-            print(f"[FATAL] Cannot find models_pth directory. Tried: {models_root}")
+            print(f"[FATAL] Cannot find models_py directory. Tried: {models_root}")
             sys.exit(1)
 
         converted = 0

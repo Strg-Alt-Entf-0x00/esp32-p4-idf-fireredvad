@@ -50,7 +50,7 @@ python download_frvd_models.py
 2. Build and flash the firmware (see step 2) and leave the ESP32 running.
 3. Run the esp-file-bridge tool to push the models over Serial to the SD Card:
 ```bash
-pip install -e D:\github-repositorys\esp-uart-filebridge\python
+python -m pip install -e "<path-to-esp-uart-filebridge>\python"
 esp-file-bridge upload_dir ../models_frvd /sd/models/ --port COM4
 ```
 
@@ -104,3 +104,80 @@ Once booted, you have access to a powerful CLI. Type `help` to see all commands.
 | `fs_ls [path]` | Lists files and directories on the SD card (`/sd/`). |
 | `record_mic <file> <sec>` | Records live audio to a `.wav` file on the SD card for debugging. |
 | `play_wav <file>` | Plays a `.wav` file through the ES8311 speaker output. |
+
+## Filebridge Setup
+
+# Filebridge Setup (Developer Example Only)
+
+The developer example includes `esp-uart-filebridge` for transferring files between the device's SD card and your development PC over UART. This is a development tool, not part of the component's public API.
+
+## Configuration
+
+The filebridge runs on UART1 at 3,000,000 baud and mounts the SD card at `/sd`. Check the firmware startup output for actual port assignment and verify board wiring matches the configuration.
+
+## Usage
+
+### List Files
+
+```bash
+python -m esp_idf_uart_filebridge.cli --port COM_PORT --baud 3000000 ls /sd
+```
+
+### Download File
+
+```bash
+python -m esp_idf_uart_filebridge.cli --port COM_PORT --baud 3000000 download /sd/file.wav local/file.wav
+```
+
+Replace `COM_PORT` with your system's serial port connected to the filebridge UART.
+
+## Requirements
+
+- Python package: `esp-idf-uart-filebridge`
+- Close any programs using the serial port during transfers
+- The filebridge port is separate from the console port
+
+## Notes
+
+- File integrity: Compare downloaded file size with remote listing
+- Port conflicts: Ensure exclusive access to the serial port during transfers
+- Configuration details in example's `idf_component.yml` and README
+
+## Filebridge Setup
+
+# Filebridge Setup (Developer Example Only)
+
+The developer example includes `esp-uart-filebridge` for transferring files between the device's SD card and your development PC over UART. This is a development tool, not part of the component's public API.
+
+## Configuration
+
+The filebridge runs on UART1 at 3,000,000 baud and mounts the SD card at `/sd`. Check the firmware startup output for actual port assignment and verify board wiring matches the configuration.
+
+## Usage
+
+### List Files
+
+```bash
+python -m esp_idf_uart_filebridge.cli --port COM_PORT --baud 3000000 ls /sd
+```
+
+### Download File
+
+```bash
+python -m esp_idf_uart_filebridge.cli --port COM_PORT --baud 3000000 download /sd/file.wav local/file.wav
+```
+
+Replace `COM_PORT` with your system's serial port connected to the filebridge UART.
+
+## Requirements
+
+- Python package: `esp-idf-uart-filebridge`
+- Close any programs using the serial port during transfers
+- The filebridge port is separate from the console port
+
+## Notes
+
+- File integrity: Compare downloaded file size with remote listing
+- Port conflicts: Ensure exclusive access to the serial port during transfers
+- Configuration details in example's `idf_component.yml` and README
+
