@@ -10,10 +10,10 @@ dependencies:
 
 files:
   exclude:
-    - "examples/**/build/**/*"
-    - "examples/**/managed_components/**/*"
     - "models_py/**/*"
-    - "tools_py/**/*"
-    - ".docs/**/*"
-    - ".git/**/*"
-    - "**/.DS_Store"
+    - "**/.*"
+    - "**/.*/**/*"
+    - "**/venv/**/*"
+    - "**/*.egg-info/**/*"
+    - "**/*.old"
+    - "**/*.bak"
